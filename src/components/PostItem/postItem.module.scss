@@ -1,0 +1,36 @@
+.container {
+  & + .container {
+    margin-block-start: 3rem;
+  }
+}
+
+.postTitle {
+  font-size: 1.75rem;
+  line-height: 1.77;
+}
+
+.postSubtitle {
+  font-size: 1.125rem;
+  line-height: 1.22;
+  color: #D7D7D7;
+}
+
+.postInfos {
+  margin-top: 1.5rem;
+  display: flex;
+  color: #BBBBBB;
+
+  span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+      margin-inline-end: .5rem;
+    }
+
+    & + span {
+      margin-left: 1.5rem;
+    }
+  }
+}
