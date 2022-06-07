@@ -1,4 +1,10 @@
 .container {
+  cursor: pointer;
+
+  &:hover .postTitle {
+    text-decoration: underline;
+  }
+
   & + .container {
     margin-block-start: 3rem;
   }

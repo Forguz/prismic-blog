@@ -1,10 +1,10 @@
 import { GetStaticProps } from 'next';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { FiCalendar, FiUser } from 'react-icons/fi';
 import Head from 'next/head';
-import { RichText } from 'prismic-dom';
-import { ReactComponentElement, useState } from 'react';
+import { useState } from 'react';
+
+import { formatPtBr } from '../utils/dateFormat';
 
 import { getPrismicClient } from '../services/prismic';
 
@@ -35,13 +35,7 @@ function formatResults(postsData: PostPagination): Post[] {
   return postsData.results.map(post => {
     return {
       uid: post.uid,
-      first_publication_date: format(
-        new Date(post.first_publication_date),
-        'dd MMM yyyy',
-        {
-          locale: ptBR,
-        }
-      ),
+      first_publication_date: formatPtBr(post.first_publication_date),
       data: {
         title: post.data.title,
         subtitle: post.data.subtitle.split('\n')[0],
@@ -72,7 +66,7 @@ export default function Home({
         <title>Home | Prismic Blog</title>
       </Head>
       <header className={styles.header}>
-        <img src="/assets/Logo.svg" alt="spacetraveling" />
+        <img src="/assets/Logo.svg" alt="logo" />
       </header>
       <main className={styles.contentContainer}>
         {results.map(post => (
@@ -100,30 +94,10 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const posts = formatResults(postsResponse);
 
-  // postsResponse.results.map(post => {
-  //   return {
-  //     uid: post.uid,
-  //     first_publication_date: format(
-  //       new Date(post.first_publication_date),
-  //       'dd MMM yyyy',
-  //       {
-  //         locale: ptBR,
-  //       }
-  //     ),
-  //     data: {
-  //       title: post.data.title,
-  //       subtitle: post.data.subtitle.split('\n')[0],
-  //       author: post.data.author,
-  //     },
-  //   };
-  // });
-
   const postsPagination = {
     next_page: postsResponse.next_page,
     results: posts,
   };
-
-  console.dir(postsPagination);
 
   return {
     props: {
